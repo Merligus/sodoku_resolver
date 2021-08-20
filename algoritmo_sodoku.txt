@@ -1,9 +1,0 @@
-1. coloca todas as possibilidades
-ficar verificando até não marcar nenhum número
-2. ve se tem só 1 possibilidade em cada casa/linha/coluna/quadrado
-3.1 verificar os números com 2 opções se estão nas mesmas casas. Se estiverem, tirar os outros dessa casa.
-3.2 verificar duas casas com apenas 2 opções, se forem os mesmos números, tirar as possibilidades desses 2 números em outras casas do mesmo quadrado.
-4. verificar cada linha/coluna se o número aparece em apenas um dos quadrados, tirar esse mesmo número das outras casas que não seja essa linha/coluna.
-5. verificar se o número está em apenas um sentido (linha ou coluna). Se estiver, tirar esse mesmo número dos outros quadrados.
-6. repetir desde o 2 se teve alteração.
-7. se o loop repetiu sem nenhuma alteração, fazer um path com um chute em uma das casas com 2 opções. Quando não restar nenhuma opção com 100% verificar se não é um absurdo o chute inicial.

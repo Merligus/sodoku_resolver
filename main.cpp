@@ -1,6 +1,7 @@
 #include <fstream>
 #include <iostream>
 #include <vector>
+#include <string>
 
 class quadrado
 {
@@ -116,7 +117,7 @@ bool resolve(celula tabela[][9], quadrado lista_quadrados[9], int quadrados[][9]
 	while (alterou)
 	{
 		alterou = false;
-		// 2. ve se tem só 1 possibilidade em cada casa/quadrado/linha/coluna
+		// 2. ve se tem sï¿½ 1 possibilidade em cada casa/quadrado/linha/coluna
 		// cada casa
 		for (i = 0; i < 9; i++)
 		{
@@ -183,7 +184,7 @@ bool resolve(celula tabela[][9], quadrado lista_quadrados[9], int quadrados[][9]
 			}
 		}
 
-		// 3.1 verificar os números com 2 opções se estão 
+		// 3.1 verificar os nï¿½meros com 2 opï¿½ï¿½es se estï¿½o 
 		// nas mesmas casas.Se estiverem, tirar os outros dessa casa.
 		// cada quadrado
 		for (int quad = 0; quad < 9; quad++)
@@ -250,9 +251,9 @@ bool resolve(celula tabela[][9], quadrado lista_quadrados[9], int quadrados[][9]
 			}
 		}
 
-		// 3.2 verificar duas casas com apenas 2 opções, se 
-		// forem os mesmos números, tirar as possibilidades 
-		// desses 2 números em outras casas do mesmo quadrado.
+		// 3.2 verificar duas casas com apenas 2 opï¿½ï¿½es, se 
+		// forem os mesmos nï¿½meros, tirar as possibilidades 
+		// desses 2 nï¿½meros em outras casas do mesmo quadrado.
 		for (int quad = 0; quad < 9; quad++)
 		{
 			lista_de_possiveis.clear();
@@ -294,9 +295,9 @@ bool resolve(celula tabela[][9], quadrado lista_quadrados[9], int quadrados[][9]
 				}
 			}	
 		}
-		// 4. verificar cada linha/coluna se o número
+		// 4. verificar cada linha/coluna se o nï¿½mero
 		// aparece em apenas um dos quadrados, tirar 
-		// esse mesmo número das outras casas que não 
+		// esse mesmo nï¿½mero das outras casas que nï¿½o 
 		// seja essa linha/coluna.
 		// por linha
 		for(i = 0; i < 9; i++)
@@ -365,9 +366,9 @@ bool resolve(celula tabela[][9], quadrado lista_quadrados[9], int quadrados[][9]
 			}
 		}
 
-		// 5. verificar se o número está em apenas
+		// 5. verificar se o nï¿½mero estï¿½ em apenas
 		// um sentido (linha ou coluna). Se estiver,
-		// tirar esse mesmo número dos outros quadrados.
+		// tirar esse mesmo nï¿½mero dos outros quadrados.
 		for(int quad = 0; quad < 9; quad++)
 		{
 			for(k = 0; k < 9; k++)
@@ -416,10 +417,10 @@ bool resolve(celula tabela[][9], quadrado lista_quadrados[9], int quadrados[][9]
 		}
 	} // fim while(alterou)
 
-	// 7. se o loop repetiu sem nenhuma alteração, 
+	// 7. se o loop repetiu sem nenhuma alteraï¿½ï¿½o, 
 	// fazer um path com um chute em uma das casas 
-	// com 2 opções. Quando não restar nenhuma opção 
-	// com 100% verificar se não é um absurdo o chute
+	// com 2 opï¿½ï¿½es. Quando nï¿½o restar nenhuma opï¿½ï¿½o 
+	// com 100% verificar se nï¿½o ï¿½ um absurdo o chute
 	// inicial.
 	finished = true;
 	for (i = 0; i < 9; i++)
@@ -443,6 +444,7 @@ bool resolve(celula tabela[][9], quadrado lista_quadrados[9], int quadrados[][9]
 		return true;
 	else
 	{
+		std::cout << "not finished" << std::endl;
 		for (i = 0; i < 9; i++)
 			for (j = 0; j < 9; j++)
 				tabela_backup[i][j] = tabela[i][j];
@@ -459,9 +461,13 @@ bool resolve(celula tabela[][9], quadrado lista_quadrados[9], int quadrados[][9]
 									alternativo = l + 1;
 							atualizar_tabela(k + 1, i, j, tabela, quadrados, lista_quadrados);
 							if(resolve(tabela, lista_quadrados, quadrados))
+							{
+								std::cout << "primeira opcao" << std::endl;
 								return true;
+							}
 							else
 							{
+								std::cout << "alternativo" << std::endl;
 								for (int ii = 0; ii < 9; ii++)
 									for (int jj = 0; jj < 9; jj++)
 										tabela[ii][jj] = tabela_backup[ii][jj];
@@ -471,15 +477,35 @@ bool resolve(celula tabela[][9], quadrado lista_quadrados[9], int quadrados[][9]
 							}
 						}
 	}
+	finished = true;
+	for (i = 0; i < 9; i++)
+		for (j = 0; j < 9; j++)
+			if (tabela[i][j].certeza != 0)
+			{
+				k = tabela[i][j].certeza;
+				tabela[i][j].certeza = 0;
+				possivel = true;
+				possivel = possivel & !verificar_se_tem(k, true, i, tabela);
+				possivel = possivel & !verificar_se_tem(k, false, j, tabela);
+				possivel = possivel & !verificar_se_tem_no_quadrado(k, quadrados[i][j], tabela, lista_quadrados);
+				if(!possivel)
+					return false;
+				tabela[i][j].certeza = k;
+			}
+			else
+				finished = false;
+
+	return finished;
 }
 
-int main()
+int main(int argc, char const *argv[])
 {
 	celula tabela[9][9];
 	quadrado lista_quadrados[9];
 	int quadrados[9][9];
 	int i, j, k;
 	bool possivel;
+	std::string filename;
 	std::ifstream input_game;
 
 	lista_quadrados[0].linhaIni = lista_quadrados[1].linhaIni = lista_quadrados[2].linhaIni = lista_quadrados[0].colunaIni = lista_quadrados[3].colunaIni = lista_quadrados[6].colunaIni = 0;
@@ -500,7 +526,11 @@ int main()
 	}
 	std::cout << "\n";
 
-	input_game.open("game.txt", std::fstream::in);
+	if (argc > 1)
+		filename = argv[1];
+	else
+		filename = "game.txt";
+	input_game.open(filename, std::fstream::in);
 	for (i = 0; i < 9; i++)
 		for (j = 0; j < 9; j++)
 		{
@@ -546,7 +576,7 @@ int main()
 
 	// cabo
 	std::cout << "\n";
-	std::cout << "RESPOSTA\n";
+	std::cout << "RESPOSTA para " << filename << std::endl;
 	for (i = 0; i < 9; i++)
 	{
 		for (j = 0; j < 9; j++)
