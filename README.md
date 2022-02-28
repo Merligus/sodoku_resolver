@@ -1,10 +1,10 @@
 # Sudoku solver
-Sudoku solver. The name of this repository is wrong (sodoku) so just ignore it, please.
+Sudoku solver. To test it you must:
 
 1. Clone the repository
    ```sh
-   git clone https://github.com/Merligus/sodoku_resolver.git
-   cd sodoku_resolver/
+   git clone https://github.com/Merligus/sudoku-solver.git
+   cd sudoku-solver/
    ```
 2. Set the game.txt with 0 for empty spaces and numbers [1-9] for fixed spaces.
 3. Compile
