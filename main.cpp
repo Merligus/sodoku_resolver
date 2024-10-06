@@ -463,11 +463,12 @@ bool resolve(celula tabela[][9], quadrado lista_quadrados[9], int quadrados[][9]
 							if(resolve(tabela, lista_quadrados, quadrados))
 							{
 								std::cout << "primeira opcao" << std::endl;
+								std::cout << "7. " << i << " " << j << " primeira opcao " << k + 1 << std::endl;
 								return true;
 							}
 							else
 							{
-								std::cout << "alternativo" << std::endl;
+								std::cout << "7. " << i << " " << j << " alternativo " << alternativo << std::endl;
 								for (int ii = 0; ii < 9; ii++)
 									for (int jj = 0; jj < 9; jj++)
 										tabela[ii][jj] = tabela_backup[ii][jj];
