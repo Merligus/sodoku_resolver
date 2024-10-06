@@ -9,6 +9,37 @@
 </head>
 
 <body>
+  <table border="0">
+    <!-- Cria a tabela 9x9 -->
+    <tbody id="tabela">
+      <!-- Loop para gerar as linhas e colunas -->
+      <script>
+        for (let i = 0; i < 9; i++) {
+          document.write('<tr>');
+          for (let j = 0; j < 9; j++) {
+            document.write('<td><input style="width:10px;" type="text" id="cell' + i + j + '"></td>');
+          }
+          document.write('</tr>');
+        }
+      </script>
+    </tbody>
+  </table>
+  <button onclick="getInput()">Solve</button>
+
+  <script>
+    function getInput() {
+      let table = [];
+      for (let i = 0; i < 9; i++) {
+        let linha = [];
+        for (let j = 0; j < 9; j++) {
+          let valor = document.getElementById('cell' + i + j).value;
+          linha.push(Number(valor));
+        }
+        table.push(linha);
+      }
+      sudokuSolve(table);
+    }
+  </script>
   <script type="text/javascript" src="./sudoku_solver.js"></script>
 </body>
 

@@ -624,24 +624,13 @@ function resolve(table, squareList, squares) {
   return finished;
 }
 
-function main() {
+function sudokuSolve(input) {
   console.log("start main");
 
   var table = [];
   var squareList = [];
   var squares = [];
   var possible = false;
-  const input = [
-    [0, 0, 0, 0, 0, 0, 3, 0, 0],
-    [0, 0, 1, 0, 0, 7, 0, 0, 6],
-    [5, 4, 0, 0, 0, 0, 0, 0, 8],
-    [0, 0, 0, 7, 0, 8, 0, 2, 0],
-    [0, 6, 0, 0, 0, 9, 0, 5, 0],
-    [0, 0, 8, 0, 0, 0, 0, 4, 0],
-    [0, 0, 0, 0, 0, 0, 0, 8, 0],
-    [1, 5, 0, 3, 0, 0, 0, 0, 0],
-    [2, 0, 0, 0, 1, 0, 0, 0, 7],
-  ];
 
   for (let square = 0; square < 9; square++) {
     squareList.push(new Square(0, 0, 0, 0));
@@ -750,6 +739,7 @@ function main() {
     var line = "";
     for (let j = 0; j < 9; j++) {
       line += `${table[i][j].certainty} `;
+      document.getElementById('cell' + i + j).value = table[i][j].certainty;
     }
     console.log(line);
   }
