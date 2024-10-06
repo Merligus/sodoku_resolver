@@ -21,3 +21,13 @@ Sudoku solver. To test it you must:
 	    ./solver game2.txt
 	    ```
 5. The answer will be printed in the final.
+
+Another way is to run in your browser with: 
+
+1. Host the page with:
+```sh
+python3 -m http.server 8000
+```
+
+2. Access the demo [localhost:8000](http://localhost:8000/);
+3. Fill only the known cells and press Solve;
